@@ -7,22 +7,23 @@ import math
 pygame.init()
 
 # Configurações da janela
-window_width = 800
-window_height = 600
+window_width = 600
+window_height = 400
 window_size = (window_width, window_height)
 window = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Tower Defense")
 
 # Cores
 black = (0, 0, 0)
-white = (255, 255, 255)
+
+background = pygame.image.load('imgs/Mapa possivel.png').convert()
 
 # Variáveis de controle do jogo
 clock = pygame.time.Clock()
 game_over = False
 
 # Definição do caminho
-path = [(0, 200), (200, 200), (200, 400), (600, 400), (600, 200), (800, 200)]
+path=[(0,200),(100,200),(100,100),(200,100),(200,250),(400,250),(400,180),(600,180)]
 
 # Classe para os inimigos
 class Enemy(pygame.sprite.Sprite):
@@ -56,6 +57,10 @@ enemies = pygame.sprite.Group()
 
 # Loop principal do jogo
 while not game_over:
+
+    window.blit(background, (0, 0))
+    pygame.display.update()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
@@ -69,15 +74,15 @@ while not game_over:
     for enemy in enemies:
         enemy.update()
 
-    # Renderização da tela
-    window.fill(white)
-
     # Desenho do caminho
     pygame.draw.lines(window, black, False, path)
 
     # Desenho dos inimigos
     for enemy in enemies:
         enemy.draw(window)
+
+    
+
 
     pygame.display.flip()
     clock.tick(60)
