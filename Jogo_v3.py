@@ -61,11 +61,11 @@ while teste:
         if event.type == pygame.QUIT:
             teste = False
 
-    # Verifica se é hora de criar um novo fantasma
+    # Verifica se é hora de criar um novo fantasma(delay)
     tempo_atual = pygame.time.get_ticks()
     if tempo_atual - last_spawn_time >= spawn_delay and len(fantasmas) < 100:
         velocidade = random.choice(velocidades)  # Escolhe uma velocidade aleatória para o fantasma
-        enemy = Fantasma(velocidade)
+        enemy = Fantasma(velocidade) # Adiciona o novo fantasma
         fantasmas.add(enemy)
         last_spawn_time = tempo_atual
 
