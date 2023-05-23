@@ -12,16 +12,17 @@ pygame.display.set_caption('Tower Defense')
 
 black = (0, 0, 0)
 background = pygame.image.load('imgs/Mapa possivel.png').convert()
+fantasmarosa_img = pygame.image.load('imgs/fantasma_rosa.png').convert()
+fantasmarosa_img = pygame.transform.scale(fantasmarosa_img, (40,30))
 
 teste = True
-caminho = [(0, 208), (90, 208), (90, 90), (210, 90), (210, 248), (370, 248), (370, 170), (600, 170)]
+caminho = [(0, 208), (80, 208), (80, 85), (200, 85), (200, 248), (360, 248), (360, 163), (600, 163)]
 
 # Classe para os inimigos
 class Fantasma(pygame.sprite.Sprite):
-    def __init__(self, velocidade):
+    def __init__(self, velocidade,img):
         super().__init__()
-        self.image = pygame.Surface((20, 20))
-        self.image.fill(black)
+        self.image = img
         self.rect = self.image.get_rect()
         self.rect.x = caminho[0][0]
         self.rect.y = caminho[0][1]
@@ -50,24 +51,34 @@ class Fantasma(pygame.sprite.Sprite):
 # Grupo para armazenar os inimigos
 fantasmas = pygame.sprite.Group()
 
+rosa=1
+
+
 # Variáveis de controle do jogo
 FPS = pygame.time.Clock()
-spawn_delay = 1000
+spawn_delay = 2000
 last_spawn_time = 0
 velocidades = [1, 2, 3, 4]  # Possíveis velocidades para os fantasmas
+
+tempo_de_round=pygame.time.get_ticks()
 
 while teste:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             teste = False
 
+    tempo_de_round= pygame.time.get_ticks()
+    tempo_de_jogo = pygame.time.get_ticks()
+
     # Verifica se é hora de criar um novo fantasma(delay)
     tempo_atual = pygame.time.get_ticks()
-    if tempo_atual - last_spawn_time >= spawn_delay and len(fantasmas) < 100:
-        velocidade = random.choice(velocidades)  # Escolhe uma velocidade aleatória para o fantasma
-        enemy = Fantasma(velocidade) # Adiciona o novo fantasma
-        fantasmas.add(enemy)
-        last_spawn_time = tempo_atual
+
+    if tempo_de_round < 10000:
+        if tempo_atual - last_spawn_time >= spawn_delay:
+            enemy = Fantasma(rosa,fantasmarosa_img) # Adiciona o novo fantasma
+            fantasmas.add(enemy)
+            last_spawn_time = tempo_atual
+
 
     # Atualização dos inimigos
     fantasmas.update()

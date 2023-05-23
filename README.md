@@ -1,10 +1,13 @@
 # Pygame-AD
-1- escolher o mapa
-2- escolher os baloes 
-3- criar o caminho
-4- fazer os baloes andarem
+1- escolher o mapa X
+2- escolher os baloes X
+3- criar o caminho X
+4- fazer os baloes andarem X
 5- mecanica rounds 
-6- mudar a velocidade para diferentes baloes
+    função para tempo dos rounds
+    função para quais fantasmas criar
+
+6- mudar a velocidade para diferentes baloes X
 7- criar as torres 
 8- posicionar torres
 9- mecanica de dano e alcance das torres
