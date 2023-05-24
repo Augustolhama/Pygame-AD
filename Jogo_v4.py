@@ -12,7 +12,7 @@ pygame.display.set_caption('Tower Defense')
 
 black = (0, 0, 0)
 background = pygame.image.load('imgs/Mapa possivel.png').convert()
-fantasmarosa_img = pygame.image.load('imgs/fantasma_rosa.png').convert()
+fantasmarosa_img = pygame.image.load('imgs/fantasma_rosa.png').convert_alpha()
 fantasmarosa_img = pygame.transform.scale(fantasmarosa_img, (40,30))
 
 teste = True
