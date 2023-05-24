@@ -37,7 +37,7 @@ caminho = [(0, 203), (80, 203), (80, 80), (200, 80), (200, 243), (360, 243), (36
 
 # Classe para os inimigos
 class Fantasma(pygame.sprite.Sprite):
-    def __init__(self, velocidade, img):
+    def __init__(self, velocidade, img, vida):
         super().__init__()
         self.image = img
         self.rect = self.image.get_rect()
@@ -45,6 +45,12 @@ class Fantasma(pygame.sprite.Sprite):
         self.rect.y = caminho[0][1]
         self.path_index = 0
         self.velocidade = velocidade
+        self.vida = vida
+
+    def receber_dano(self, dano):
+        self.vida -= dano
+        if self.vida <= 0:
+            self.kill()
 
     def update(self):
         if self.path_index < len(caminho) - 1:
@@ -115,19 +121,28 @@ while teste:
         tipo_fantasma = random.choice(["rosa", "azul", "azulclaro", "vermelho"])
 
         if tipo_fantasma == "rosa":
-            enemy = Fantasma(1, fantasmarosa_img)
+            enemy = Fantasma(1, fantasmarosa_img,1)
         elif tipo_fantasma == "azul":
-            enemy = Fantasma(2, fantasmaazul_img)
+            enemy = Fantasma(2, fantasmaazul_img,2)
         elif tipo_fantasma == "azulclaro":
-            enemy = Fantasma(3, fantasmaazulclaro_img)
+            enemy = Fantasma(3, fantasmaazulclaro_img,3)
         elif tipo_fantasma == "vermelho":
-            enemy = Fantasma(4, fantasmavermelho_img)
+            enemy = Fantasma(4, fantasmavermelho_img,4)
 
         fantasmas.add(enemy)
         last_spawn_time = tempo_atual
 
     # Atualização dos inimigos
     fantasmas.update()
+
+    # Dentro do loop principal (while teste), após a atualização dos inimigos
+
+    # Verifica colisões entre os fantasmas e as torres
+    colisoes = pygame.sprite.groupcollide(fantasmas, torres, False, False)
+    for fantasma, torres_alcancadas in colisoes.items():
+        for torre in torres_alcancadas:
+            fantasma.receber_dano(torre.dano)
+
 
     tela.blit(background, (0, 0))
 
