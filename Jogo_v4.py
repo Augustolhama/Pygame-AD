@@ -13,7 +13,7 @@ pygame.display.set_caption('Tower Defense')
 black = (0, 0, 0)
 background = pygame.image.load('imgs/Mapa possivel.png').convert()
 fantasmarosa_img = pygame.image.load('imgs/fantasma_rosa.png').convert_alpha()
-fantasmarosa_img = pygame.transform.scale(fantasmarosa_img, (40,30))
+fantasmarosa_img = pygame.transform.scale(fantasmarosa_img, (35,35))
 
 teste = True
 caminho = [(0, 208), (80, 208), (80, 85), (200, 85), (200, 248), (360, 248), (360, 163), (600, 163)]
