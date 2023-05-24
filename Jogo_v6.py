@@ -38,8 +38,8 @@ caminho = [(0, 203), (80, 203), (80, 80), (200, 80), (200, 243), (360, 243), (36
 
 # Classe para os inimigos
 class Fantasma(pygame.sprite.Sprite):
-    def _init_(self, velocidade, img):
-        super()._init_()
+    def __init__(self, velocidade, img):
+        super().__init__()
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.x = caminho[0][0]
@@ -52,24 +52,25 @@ class Fantasma(pygame.sprite.Sprite):
             destination = caminho[self.path_index + 1]
             dx = destination[0] - self.rect.x
             dy = destination[1] - self.rect.y
-            distance = math.sqrt(dx * 2 + dy * 2)
+            distance = math.sqrt(dx ** 2 + dy ** 2)
             if distance > self.velocidade:
-                speed_x = (dx / distance) * self.velocidade
-                speed_y = (dy / distance) * self.velocidade
-                self.rect.x += speed_x
-                self.rect.y += speed_y
+                direction_x = dx / distance
+                direction_y = dy / distance
+                self.rect.x += direction_x * self.velocidade
+                self.rect.y += direction_y * self.velocidade
             else:
                 self.rect.x = destination[0]
                 self.rect.y = destination[1]
                 self.path_index += 1
+
 
     def draw(self, screen):
         pygame.draw.rect(screen, black, self.rect)
 
 # Classe para as torres
 class Torre(pygame.sprite.Sprite):
-    def _init_(self, dano, custo, alcance, img):
-        super()._init_()
+    def __init__(self, dano, custo, alcance, img):
+        super().__init__()
         self.image = img
         self.rect = self.image.get_rect()
         self.dano = dano
@@ -110,6 +111,9 @@ while teste:
 
         fantasmas.add(enemy)
         last_spawn_time = tempo_atual
+
+    # Atualização dos inimigos
+    fantasmas.update()
 
     tela.blit(background, (0, 0))
 
