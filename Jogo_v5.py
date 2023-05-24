@@ -13,14 +13,23 @@ pygame.display.set_caption('Tower Defense')
 black = (0, 0, 0)
 background = pygame.image.load('imgs/Mapa possivel.png').convert()
 fantasmarosa_img = pygame.image.load('imgs/fantasma_rosa.png').convert_alpha()
-fantasmarosa_img = pygame.transform.scale(fantasmarosa_img, (35,35))
+fantasmarosa_img = pygame.transform.scale(fantasmarosa_img, (35, 35))
+
+fantasmaazul_img = pygame.image.load('imgs/fantasma_azul.png').convert_alpha()
+fantasmaazul_img = pygame.transform.scale(fantasmaazul_img, (35, 35))
+
+fantasmaazulclaro_img = pygame.image.load('imgs/fantasma_azulclaro.png').convert_alpha()
+fantasmaazulclaro_img = pygame.transform.scale(fantasmaazulclaro_img, (35, 35))
+
+fantasmavermelho_img = pygame.image.load('imgs/fantasma_vermelho.png').convert_alpha()
+fantasmavermelho_img = pygame.transform.scale(fantasmavermelho_img, (35, 35))
 
 teste = True
 caminho = [(0, 203), (80, 203), (80, 80), (200, 80), (200, 243), (360, 243), (360, 160), (600, 160)]
 
 # Classe para os inimigos
 class Fantasma(pygame.sprite.Sprite):
-    def __init__(self, velocidade,img):
+    def __init__(self, velocidade, img):
         super().__init__()
         self.image = img
         self.rect = self.image.get_rect()
@@ -51,34 +60,34 @@ class Fantasma(pygame.sprite.Sprite):
 # Grupo para armazenar os inimigos
 fantasmas = pygame.sprite.Group()
 
-rosa=1
-
-
 # Variáveis de controle do jogo
 FPS = pygame.time.Clock()
 spawn_delay = 2000
 last_spawn_time = 0
-velocidades = [1, 2, 3, 4]  # Possíveis velocidades para os fantasmas
-
-tempo_de_round=pygame.time.get_ticks()
 
 while teste:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             teste = False
 
-    tempo_de_round= pygame.time.get_ticks()
-    tempo_de_jogo = pygame.time.get_ticks()
-
-    # Verifica se é hora de criar um novo fantasma(delay)
+    # Verifica se é hora de criar um novo fantasma (delay)
     tempo_atual = pygame.time.get_ticks()
 
-    if tempo_de_round < 10000:
-        if tempo_atual - last_spawn_time >= spawn_delay:
-            enemy = Fantasma(rosa,fantasmarosa_img) # Adiciona o novo fantasma
-            fantasmas.add(enemy)
-            last_spawn_time = tempo_atual
+    if tempo_atual - last_spawn_time >= spawn_delay:
+        # Escolhe aleatoriamente o tipo de fantasma
+        tipo_fantasma = random.choice(["rosa", "azul", "azulclaro", "vermelho"])
 
+        if tipo_fantasma == "rosa":
+            enemy = Fantasma(1, fantasmarosa_img)
+        elif tipo_fantasma == "azul":
+            enemy = Fantasma(2, fantasmaazul_img)
+        elif tipo_fantasma == "azulclaro":
+            enemy = Fantasma(3, fantasmaazulclaro_img)
+        elif tipo_fantasma == "vermelho":
+            enemy = Fantasma(4, fantasmavermelho_img)
+
+        fantasmas.add(enemy)
+        last_spawn_time = tempo_atual
 
     # Atualização dos inimigos
     fantasmas.update()
