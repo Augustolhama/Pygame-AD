@@ -76,32 +76,45 @@ class Torre(pygame.sprite.Sprite):
         self.dano = dano
         self.custo = custo
         self.alcance = alcance
+        self.fantasmas_no_alcance = pygame.sprite.Group()
 
     def draw(self, screen):
         pygame.draw.rect(screen, preto, self.rect)
 
-    def verificar_alcance(self, alvo):
-        dx = alvo.rect.centerx - self.rect.centerx
-        dy = alvo.rect.centery - self.rect.centery
-        distancia = math.sqrt(dx ** 2 + dy ** 2)
+    def verificar_alcance(self, fantasma):
+        distancia = math.sqrt(
+            (fantasma.rect.centerx - self.rect.centerx) ** 2 + (fantasma.rect.centery - self.rect.centery) ** 2
+        )
         return distancia <= self.alcance
 
     def atirar(self):
-        projetil = Projetil(self.rect.center, self.dano)
-        projeteis.add(projetil)
+        for fantasma in self.fantasmas_no_alcance:
+            projetil = Projetil(self.rect.center, self.dano, fantasma)
+            projeteis.add(projetil)
 
 # Classe para os projéteis
 class Projetil(pygame.sprite.Sprite):
-    def __init__(self, posicao, dano):
+    def __init__(self, posicao, dano, alvo):
         super().__init__()
         self.image = pygame.Surface((8, 8))
         self.image.fill(vermelho)
         self.rect = self.image.get_rect(center=posicao)
         self.velocidade = 5
         self.dano = dano
+        self.alvo = alvo
 
     def update(self):
-        self.rect.x += self.velocidade
+        if self.alvo is not None:
+            dx = self.alvo.rect.centerx - self.rect.centerx
+            dy = self.alvo.rect.centery - self.rect.centery
+            distance = math.sqrt(dx ** 2 + dy ** 2)
+            if distance > 0:
+                direction_x = dx / distance
+                direction_y = dy / distance
+                self.rect.x += direction_x * self.velocidade
+                self.rect.y += direction_y * self.velocidade
+            else:
+                self.alvo = None
 
 # Grupo para armazenar os inimigos
 fantasmas = pygame.sprite.Group()
@@ -142,54 +155,63 @@ def desenhar_projeteis(screen):
     for projetil in projeteis:
         screen.blit(projetil.image, projetil.rect)
 
-# Função para atualizar os projéteis
-def atualizar_projeteis():
-    projeteis.update()
+# Função principal do jogo
+def main():
+    global last_spawn_time
+    teste= True
+    # Loop principal do jogo
+    while teste:
+        # Eventos do Pygame
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                teste = False
+                pygame.quit()
+                return
 
-# Função para verificar colisões entre projéteis e fantasmas
-def verificar_colisoes():
-    colisoes = pygame.sprite.groupcollide(fantasmas, projeteis, True, True)
-    for fantasma, projetil_lista in colisoes.items():
-        for projetil in projetil_lista:
-            print(f"Fantasma atingido! Dano: {projetil.dano}")
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if pygame.mouse.get_pressed()[0]:
+                    posicao_mouse = pygame.mouse.get_pos()
+                    nova_torre = Torre(1, 100, 70, mago_img, posicao_mouse)
+                    torres.add(nova_torre)
 
-# Criação da torre
-torre_mago = Torre(2, 100, 150, mago_img, (140, 140))
-torres.add(torre_mago)
+        # Atualização dos objetos
+        fantasmas.update()
+        projeteis.update()
 
-while teste:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            teste = False
+        # Verificação de colisão entre os projéteis e os fantasmas
+        colisoes = pygame.sprite.groupcollide(fantasmas, projeteis, False, False)
+        for fantasma, projetil_lista in colisoes.items():
+            for projetil in projetil_lista:
+                fantasma.velocidade -= projetil.dano
+                projetil.kill()
+            if fantasma.velocidade <= 0:
+                fantasma.kill()
 
-    # Verifica se é hora de criar um novo fantasma (delay)
-    tempo_atual = pygame.time.get_ticks()
-
-    if tempo_atual - last_spawn_time >= spawn_delay:
-        criar_fantasma()
-        last_spawn_time = tempo_atual
-
-    # Atualizações
-    fantasmas.update()
-    projeteis.update()
-
-    # Verifica colisões
-    verificar_colisoes()
-
-    # Atira nas torres quando um fantasma está dentro do alcance
-    for torre in torres:
-        for fantasma in fantasmas:
-            if torre.verificar_alcance(fantasma):
+        # Verificação de alcance das torres
+        for torre in torres:
+            torre.fantasmas_no_alcance.empty()
+            for fantasma in fantasmas:
+                if torre.verificar_alcance(fantasma):
+                    torre.fantasmas_no_alcance.add(fantasma)
+            if len(torre.fantasmas_no_alcance) > 0:
                 torre.atirar()
 
-    # Renderização
-    tela.blit(background, (0, 0))
-    desenhar_fantasmas(tela)
-    desenhar_torres(tela)
-    desenhar_projeteis(tela)
+        # Renderização do jogo
+        tela.blit(background, (0, 0))
+        desenhar_fantasmas(tela)
+        desenhar_torres(tela)
+        desenhar_projeteis(tela)
 
-    pygame.display.flip()
-    pygame.time.Clock().tick(fps)
+        # Verificação do tempo para criar novos fantasmas
+        current_time = pygame.time.get_ticks()
+        if current_time - last_spawn_time > spawn_delay:
+            criar_fantasma()
+            last_spawn_time = current_time
 
-# Encerramento do Pygame
-pygame.quit()
+        # Atualização da tela
+        pygame.display.flip()
+        pygame.time.Clock().tick(fps)
+
+# Execução do jogo
+if __name__ == "__main__":
+    main()
