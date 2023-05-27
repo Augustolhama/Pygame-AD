@@ -34,16 +34,14 @@ arqueiro_img = pygame.transform.scale(arqueiro_img, (35, 35))
 # Variáveis de controle do jogo
 teste = True
 caminho = [(0, 203), (80, 203), (80, 80), (200, 80), (200, 243), (360, 243), (360, 160), (600, 160)]
-fps = 60
+fps = 45
 spawn_delay = 1000
 last_spawn_time = 0
 dinheiro = 100
 #Preço do valor de cada fantasma
-precos_fantasmas = {
-    "rosa": 4,
-    "azul": 8,
-    "azulclaro": 16,
-    "vermelho": 32}
+precos_fantasmas = {"rosa": 4,"azul": 8,"azulclaro": 16,"vermelho": 32}
+#Custo das Torres
+custo = {'mago':100,'arqueiro':150,'golem':300}
 
 # Classe para os inimigos
 class Fantasma(pygame.sprite.Sprite):
@@ -88,7 +86,7 @@ class Torre(pygame.sprite.Sprite):
         self.alcance_maximo = alcance_maximo
         self.fantasmas_no_alcance = pygame.sprite.Group()
         self.last_shot_time = 0  # Variável para controlar o tempo entre os disparos
-        self.shoot_delay = 2000  # Tempo de espera entre os disparos em milissegundos (0,5 segundos)
+        self.shoot_delay = 2000  # Tempo de espera 
 
     def draw(self, screen):
         pygame.draw.rect(screen, preto, self.rect)
