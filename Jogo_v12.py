@@ -244,8 +244,14 @@ def desenhar_vida(screen):
 def main():
     global last_spawn_time
     global vida_jogador
+    global dinheiro
     teste = True
     vida_jogador=100
+    dano_atual = 1
+    custo_atual = 100
+    alcance_atual = 100
+    foto_atual = arqueiro_img
+    alcancemax_atual = 120
     # Loop principal do jogo
     while teste:
         # Eventos do Pygame
@@ -254,12 +260,6 @@ def main():
                 teste = False
                 pygame.quit()
                 return
-        
-            dano_atual = 1
-            custo_atual = 100
-            alcance_atual = 100
-            foto_atual = arqueiro_img
-            alcancemax_atual = 120
 
             if event.type == pygame.KEYDOWN:            
                 if event.key == pygame.K_1:
