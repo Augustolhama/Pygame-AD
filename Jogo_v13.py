@@ -29,7 +29,7 @@ mago_img = pygame.transform.scale(mago_img, (45, 45))
 golem_img = pygame.image.load('imgs/Golem.png').convert_alpha()
 golem_img = pygame.transform.scale(golem_img, (50, 50))
 arqueiro_img = pygame.image.load('imgs/Arqueiro.png').convert_alpha()
-arqueiro_img = pygame.transform.scale(arqueiro_img, (45, 45))
+arqueiro_img = pygame.transform.scale(arqueiro_img, (50, 50))
 golem_tiros_img = pygame.image.load('imgs/pedra.png').convert_alpha()
 golem_tiros_img = pygame.transform.scale(golem_tiros_img, (20, 20))
 mago_tiros_img = pygame.image.load('imgs/Fogo.png').convert_alpha()
@@ -42,7 +42,7 @@ teste = True
 caminho = [(0, 203), (80, 203), (80, 80), (200, 80), (200, 243), (360, 243), (360, 160), (600, 160)]
 fim_caminho = (600,160)
 fps = 45
-spawn_delay = 1000
+spawn_delay = 10
 last_spawn_time = 0
 dinheiro = 1000
 
@@ -54,9 +54,9 @@ custo = {'mago':100,'arqueiro':150,'golem':300}
 
 # Posições da loja
 
-torre_arqueiro_pos = (545, 345)
-torre_mago_pos = (498, 350)
-torre_golem_pos = (445, 350)
+torre_golem_pos = (545, 345)
+torre_mago_pos = (494, 350)
+torre_arqueiro_pos = (440, 345)
 
 # Variável para armazenar a vida do jogador
 vida_jogador = 100
@@ -97,6 +97,8 @@ class Fantasma(pygame.sprite.Sprite):
             if self.rect.x ==600 and self.rect.y ==160:
                 vida_jogador -= self.life
                 self.kill()
+                if vida_jogador <= 0:
+                    pygame.QUIT()
 
     def draw(self, screen):
         pygame.draw.rect(screen, preto, self.rect)
@@ -336,12 +338,18 @@ def main():
         tela.blit(mago_img, torre_mago_pos)
         tela.blit(golem_img, torre_golem_pos)
         fonte_loja =  pygame.font.SysFont(None, 20)
-        texto_preco_arqueiro = fonte_loja.render('$'+str(200),True,branco)
-        tela.blit(texto_preco_arqueiro,(500,330))
+        texto_preco_arqueiro = fonte_loja.render('$'+str(100),True,branco)
+        tela.blit(texto_preco_arqueiro,(450,330))
         texto_preco_golem = fonte_loja.render('$'+str(400),True,branco)
-        tela.blit(texto_preco_golem,(450,330))
-        texto_preco_mago = fonte_loja.render('$'+str(100),True,branco)
-        tela.blit(texto_preco_mago,(550,330))
+        tela.blit(texto_preco_golem,(550,330))
+        texto_preco_mago = fonte_loja.render('$'+str(200),True,branco)
+        tela.blit(texto_preco_mago,(500,330))
+        texto_tecla_arqueiro = fonte_loja.render(str(1),True,branco)
+        tela.blit(texto_tecla_arqueiro,(450,385))
+        texto_tecla_mago = fonte_loja.render(str(2),True,branco)
+        tela.blit(texto_tecla_mago,(500,385))
+        texto_tecla_golem = fonte_loja.render(str(3),True,branco)
+        tela.blit(texto_tecla_golem,(550,385))
 
         desenhar_fantasmas(tela)
         desenhar_torres(tela)
