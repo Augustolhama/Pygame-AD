@@ -267,8 +267,8 @@ def main():
                 teste = False
                 pygame.quit()
                 return
-
-            if event.type == pygame.KEYDOWN:            
+            #Seleciona tipo de Torre
+            if event.type == pygame.KEYDOWN:             
                 if event.key == pygame.K_1:
                     dano_atual = 1
                     custo_atual = 100
@@ -293,7 +293,7 @@ def main():
                     alcancemax_atual = 100
                     disparo_atual = golem_tiros_img
 
-
+            #Seleciona posição da Torre
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if dinheiro >= custo_atual:
                     if pygame.mouse.get_pressed()[0]:

@@ -17,7 +17,7 @@
 12- melhorar torres
 13- sons (estouro,tiro,somde vitória)
 14- tela de inicio
-15- imagem projetil
+15- imagem projetilX
 16- game over
 
 Extra
