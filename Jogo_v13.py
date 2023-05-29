@@ -35,7 +35,7 @@ golem_tiros_img = pygame.transform.scale(golem_tiros_img, (20, 20))
 mago_tiros_img = pygame.image.load('imgs/Fogo.png').convert_alpha()
 mago_tiros_img = pygame.transform.scale(mago_tiros_img, (20, 20))
 arqueiro_tiros_img = pygame.image.load('imgs/flecha.png').convert_alpha()
-arqueiro_tiros_img = pygame.transform.scale(arqueiro_tiros_img, (20, 20))
+arqueiro_tiros_img = pygame.transform.scale(arqueiro_tiros_img, (20, 30))
 
 # Variáveis de controle do jogo
 teste = True
