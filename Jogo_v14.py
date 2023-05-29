@@ -136,9 +136,6 @@ class Torre(pygame.sprite.Sprite):
                 fantasma = self.fantasmas_no_alcance.sprites()[0]  # Seleciona o primeiro fantasma
                 projetil = Projetil(self.rect.center, self.dano, fantasma, self.alcance_maximo, self.foto_tiro)
                 projeteis.add(projetil)
-                fantasma.life -= self.dano
-                if fantasma.life <= 0:
-                    fantasma.kill()
                 self.last_shot_time = current_time
         else:
             self.atirando = False
