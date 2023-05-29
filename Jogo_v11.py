@@ -41,7 +41,7 @@ last_spawn_time = 0
 dinheiro = 100
 
 #Preço do valor de cada fantasma
-precos_fantasmas = {"rosa": 4,"azul": 8,"azulclaro": 16,"vermelho": 32}
+precos_fantasmas = {"rosa": 2,"azul": 4,"azulclaro": 8,"vermelho": 16}
 
 #Custo das Torres
 custo = {'mago':100,'arqueiro':150,'golem':300}
@@ -124,8 +124,8 @@ class Torre(pygame.sprite.Sprite):
             for fantasma in self.fantasmas_no_alcance:
                 projetil = Projetil(self.rect.center, self.dano, fantasma, self.alcance_maximo)
                 projeteis.add(projetil)
-                fantasma.vida -= self.dano  # Diminui a vida do fantasma com base no dano da torre
-                if fantasma.vida <= 0:
+                fantasma.life -= self.dano  # Diminui a vida do fantasma com base no dano da torre
+                if fantasma.life <= 0:
                     fantasma.kill()
             self.last_shot_time = current_time  # Atualiza o tempo do último disparo
             return True  # Retorna True se o disparo foi realizado
@@ -205,9 +205,9 @@ def colisao_projetil_fantasma():
     colisoes = pygame.sprite.groupcollide(fantasmas, projeteis, False, False)
     for fantasma, projetil_lista in colisoes.items():
         for projetil in projetil_lista:
-            fantasma.vida -= projetil.dano
+            fantasma.life -= projetil.dano
             projetil.kill()
-        if fantasma.vida <= 0:
+        if fantasma.life <= 0:
             fantasma.kill()
             tipo_fantasma = obter_tipo_fantasma(fantasma)
             dinheiro += precos_fantasmas[tipo_fantasma]  # Adiciona o preço do fantasma ao dinheiro do jogador
@@ -280,9 +280,9 @@ def main():
         colisoes = pygame.sprite.groupcollide(fantasmas, projeteis, False, False)
         for fantasma, projetil_lista in colisoes.items():
             for projetil in projetil_lista:
-                fantasma.vida -= projetil.dano
+                fantasma.life -= projetil.dano
                 projetil.kill()
-            if fantasma.vida <= 0:
+            if fantasma.life <= 0:
                 fantasma.kill()
                 
 
