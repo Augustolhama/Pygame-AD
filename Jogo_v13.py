@@ -30,6 +30,8 @@ golem_img = pygame.image.load('imgs/Golem.png').convert_alpha()
 golem_img = pygame.transform.scale(golem_img, (40, 40))
 arqueiro_img = pygame.image.load('imgs/Arqueiro.png').convert_alpha()
 arqueiro_img = pygame.transform.scale(arqueiro_img, (40, 40))
+golem_tiros_img = pygame.image.load('imgs/pedra.png').convert_alpha()
+golem_tiros_img = pygame.transform.scale(arqueiro_img, (10, 10))
 
 # Variáveis de controle do jogo
 teste = True
@@ -97,7 +99,7 @@ class Fantasma(pygame.sprite.Sprite):
 
 # Classe para as torres
 class Torre(pygame.sprite.Sprite):
-    def __init__(self, dano, custo, alcance, img, posicao, alcance_maximo):
+    def __init__(self, dano, custo, alcance, img, posicao, alcance_maximo,foto_disparo):
         super().__init__()
         self.image = img
         self.rect = self.image.get_rect(center=posicao)
@@ -107,7 +109,8 @@ class Torre(pygame.sprite.Sprite):
         self.alcance_maximo = alcance_maximo
         self.fantasmas_no_alcance = pygame.sprite.Group()
         self.last_shot_time = 0  # Variável para controlar o tempo entre os disparos
-        self.shoot_delay = 2000  # Tempo de espera 
+        self.shoot_delay = 2000  # Tempo de espera
+        self.foto_tiro = foto_disparo 
 
     def draw(self, screen):
         pygame.draw.rect(screen, preto, self.rect)
@@ -122,7 +125,7 @@ class Torre(pygame.sprite.Sprite):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_shot_time > self.shoot_delay:
             for fantasma in self.fantasmas_no_alcance:
-                projetil = Projetil(self.rect.center, self.dano, fantasma, self.alcance_maximo)
+                projetil = Projetil(self.rect.center, self.dano, fantasma, self.alcance_maximo,self.foto_tiro)
                 projeteis.add(projetil)
                 fantasma.life -= self.dano  # Diminui a vida do fantasma com base no dano da torre
                 if fantasma.life <= 0:
@@ -133,10 +136,9 @@ class Torre(pygame.sprite.Sprite):
 
 # Classe para os projéteis
 class Projetil(pygame.sprite.Sprite):
-    def __init__(self, posicao, dano, alvo, alcance_maximo):
+    def __init__(self, posicao, dano, alvo, alcance_maximo,foto_disparo):
         super().__init__()
-        self.image = pygame.Surface((8, 8))
-        self.image.fill(vermelho)
+        self.image = foto_disparo
         self.rect = self.image.get_rect(center=posicao)
         self.velocidade = 5
         self.dano = dano
@@ -268,6 +270,7 @@ def main():
                     alcance_atual = 100
                     foto_atual = arqueiro_img
                     alcancemax_atual = 120
+                    disparo_atual =
                 
                 if event.key == pygame.K_2:
                     dano_atual = 2
@@ -275,13 +278,15 @@ def main():
                     alcance_atual = 90
                     foto_atual = mago_img
                     alcancemax_atual = 110
-
+                    disparo_atual =
+                    
                 if event.key == pygame.K_3:
                     dano_atual = 3
                     custo_atual = 400
                     alcance_atual = 70
                     foto_atual = golem_img
                     alcancemax_atual = 100
+                    disparo_atual = golem_tiros_img
 
 
             if event.type == pygame.MOUSEBUTTONDOWN:
