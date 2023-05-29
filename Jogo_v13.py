@@ -25,13 +25,17 @@ fantasmaazulclaro_img = pygame.transform.scale(fantasmaazulclaro_img, (35, 35))
 fantasmavermelho_img = pygame.image.load('imgs/fantasma_vermelho.png').convert_alpha()
 fantasmavermelho_img = pygame.transform.scale(fantasmavermelho_img, (35, 35))
 mago_img = pygame.image.load('imgs/Mago.png').convert_alpha()
-mago_img = pygame.transform.scale(mago_img, (35, 35))
+mago_img = pygame.transform.scale(mago_img, (45, 45))
 golem_img = pygame.image.load('imgs/Golem.png').convert_alpha()
-golem_img = pygame.transform.scale(golem_img, (40, 40))
+golem_img = pygame.transform.scale(golem_img, (50, 50))
 arqueiro_img = pygame.image.load('imgs/Arqueiro.png').convert_alpha()
-arqueiro_img = pygame.transform.scale(arqueiro_img, (40, 40))
+arqueiro_img = pygame.transform.scale(arqueiro_img, (45, 45))
 golem_tiros_img = pygame.image.load('imgs/pedra.png').convert_alpha()
-golem_tiros_img = pygame.transform.scale(arqueiro_img, (10, 10))
+golem_tiros_img = pygame.transform.scale(golem_tiros_img, (20, 20))
+mago_tiros_img = pygame.image.load('imgs/Fogo.png').convert_alpha()
+mago_tiros_img = pygame.transform.scale(mago_tiros_img, (20, 20))
+arqueiro_tiros_img = pygame.image.load('imgs/flecha.png').convert_alpha()
+arqueiro_tiros_img = pygame.transform.scale(arqueiro_tiros_img, (20, 20))
 
 # Variáveis de controle do jogo
 teste = True
@@ -40,7 +44,7 @@ fim_caminho = (600,160)
 fps = 45
 spawn_delay = 1000
 last_spawn_time = 0
-dinheiro = 100
+dinheiro = 1000
 
 #Preço do valor de cada fantasma
 precos_fantasmas = {"rosa": 2,"azul": 4,"azulclaro": 8,"vermelho": 16}
@@ -254,6 +258,7 @@ def main():
     alcance_atual = 100
     foto_atual = arqueiro_img
     alcancemax_atual = 120
+    disparo_atual = arqueiro_tiros_img
     # Loop principal do jogo
     while teste:
         # Eventos do Pygame
@@ -270,7 +275,7 @@ def main():
                     alcance_atual = 100
                     foto_atual = arqueiro_img
                     alcancemax_atual = 120
-                    disparo_atual =
+                    disparo_atual = arqueiro_tiros_img
                 
                 if event.key == pygame.K_2:
                     dano_atual = 2
@@ -278,8 +283,8 @@ def main():
                     alcance_atual = 90
                     foto_atual = mago_img
                     alcancemax_atual = 110
-                    disparo_atual =
-                    
+                    disparo_atual = mago_tiros_img
+
                 if event.key == pygame.K_3:
                     dano_atual = 3
                     custo_atual = 400
@@ -293,7 +298,7 @@ def main():
                 if dinheiro >= custo_atual:
                     if pygame.mouse.get_pressed()[0]:
                         posicao_mouse = pygame.mouse.get_pos()
-                        nova_torre = Torre(dano_atual, custo_atual, alcance_atual, foto_atual, posicao_mouse, alcancemax_atual)
+                        nova_torre = Torre(dano_atual, custo_atual, alcance_atual, foto_atual, posicao_mouse, alcancemax_atual,disparo_atual)
                         torres.add(nova_torre)
                         dinheiro -= custo_atual
 
