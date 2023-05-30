@@ -297,8 +297,8 @@ def espaco_torre(t):
     x=t[0]
     y=t[1]
 
-    for i in range(x - 20, x + 20):
-        for j in range(y - 20, y + 20):
+    for i in range(x - 30, x + 30):
+        for j in range(y - 30, y + 30):
             locais_ocupados.append((i, j))
 
 
