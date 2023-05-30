@@ -44,7 +44,7 @@ fim_caminho = (600,160)
 fps = 45
 spawn_delay = 1000
 last_spawn_time = 0
-dinheiro = 1000
+dinheiro = 100000
 
 #Preço do valor de cada fantasma
 precos_fantasmas = {"rosa": 2,"azul": 4,"azulclaro": 8,"vermelho": 16}
@@ -292,6 +292,16 @@ def ocupa_espacos(aqui):
         locais_ocupados.append(aqui)
         return True
 
+#ocupa uma área perto a torre colocada
+def espaco_torre(t):
+    x=t[0]
+    y=t[1]
+
+    for i in range(x - 20, x + 20):
+        for j in range(y - 20, y + 20):
+            locais_ocupados.append((i, j))
+
+
 
 # Função principal do jogo
 def main():
@@ -355,6 +365,7 @@ def main():
                         if ocupa_espacos(posicao_mouse):
                             nova_torre = Torre(dano_atual, custo_atual, alcance_atual, foto_atual, posicao_mouse, alcancemax_atual,disparo_atual)
                             torres.add(nova_torre)
+                            espaco_torre(posicao_mouse)
                             dinheiro -= custo_atual
                         else:
                             mensagem_temporaria = 'Posição inválida'
