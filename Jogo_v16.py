@@ -63,7 +63,26 @@ vida_jogador = 100
 
 # Fonte para exibir a vida do jogador na tela
 fonte_vida = pygame.font.Font(None, 30)
-
+rounds={'round1':['rosa',10],
+        'round2':['rosa',20],
+        'round3':['rosa',15,'azul',5],
+        'round5':['rosa',20,'azul',8],
+        'round6':['rosa',30,'azul',15],
+        'round7':['rosa',10,'azul',25],
+        'round8':['rosa',20,'azul',20],
+        'round9':['rosa',10,'azul',10,'azulclaro',5],
+        'round10':['rosa',20,'azul',20,'azulclaro',8],
+        'round11':['rosa',0,'azul',10,'azulclaro',15],
+        'round12':['rosa',0,'azul',20,'azulclaro',20],
+        'round13':['rosa',0,'azul',20,'azulclaro',35],
+        'round14':['rosa',0,'azul',10,'azulclaro',45],
+        'round15':['rosa',0,'azul',10,'azulclaro',55],
+        'round16':['rosa',0,'azul',10,'azulclaro',20,'vermelho',10],
+        'round17':['rosa',0,'azul',10,'azulclaro',20,'vermelho',20],
+        'round18':['rosa',0,'azul',10,'azulclaro',20,'vermelho',30],
+        'round19':['rosa',20,'azul',20,'azulclaro',20,'vermelho',30],
+        'round20':['rosa',50,'azul',50,'azulclaro',50,'vermelho',50],
+        }
 
 # Classe para os inimigos
 class Fantasma(pygame.sprite.Sprite):
