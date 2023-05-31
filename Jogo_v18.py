@@ -636,32 +636,32 @@ def main():
             if cronometro <= 15000:
                 criar_fantasma1()
                 round_atual =1
-            elif cronometro > 15000 and cronometro<= 30000:
+            elif cronometro > 17000 and cronometro<= 32000:
                 criar_fantasma2()
                 round_atual =2
-            elif cronometro > 30000 and cronometro <= 45000:
+            elif cronometro > 34000 and cronometro <= 49000:
                 criar_fantasma3()
                 round_atual =3
-            elif cronometro> 45000 and cronometro <= 60000:
+            elif cronometro> 51000 and cronometro <= 66000:
                 criar_fantasma4()
                 round_atual =4
-            elif cronometro > 75000 and cronometro <= 100000:
+            elif cronometro > 68000 and cronometro <= 88000:
                 criar_fantasma5()
                 round_atual =5
-            elif cronometro > 100000 and cronometro <= 120000:
+            elif cronometro > 90000 and cronometro <= 110000:
                 criar_fantasma6()
                 round_atual =6
-            elif cronometro > 120000 and cronometro <= 150000:
+            elif cronometro > 112000 and cronometro <= 142000:
                 criar_fantasma7()
                 round_atual =7
-            elif cronometro > 150000 and cronometro <= 170000:
+            elif cronometro > 144000 and cronometro <= 164000:
                 criar_fantasma8()
                 round_atual =8
                 spawn_delay = 500 # Pros fantasmas spawnarem mais depressa 
-            elif cronometro > 170000 and cronometro <= 200000:
+            elif cronometro > 166000 and cronometro <= 200000:
                 criar_fantasma9()
                 round_atual =9
-            elif cronometro > 200000 and cronometro <= 300000:
+            elif cronometro > 202000 and cronometro <= 300000:
                 criar_fantasma10()
                 round_atual =10
             last_spawn_time = current_time
