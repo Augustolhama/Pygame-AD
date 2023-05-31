@@ -51,7 +51,7 @@ last_spawn_time = 0
 dinheiro = 400
 
 #Preço do valor de cada fantasma
-precos_fantasmas = {"rosa": 2,"azul": 4,"azulclaro": 8,"vermelho": 16}
+precos_fantasmas = {"rosa": 6,"azul": 10,"azulclaro": 16,"vermelho": 24}
 
 #Custo das Torres
 custo = {'mago':100,'arqueiro':150,'golem':300}
@@ -402,6 +402,7 @@ def preenche_caminho_h(lista ,t1,t2):
 
         x1 +=1
     return lista
+
 #preenche espaços ao redor do caminho vertical
 def preenche_caminho_v(lista ,t1,t2):
     x1 = t1[0]
@@ -528,25 +529,25 @@ def main():
                 if event.key == pygame.K_1:
                     dano_atual = 1
                     custo_atual = 100
-                    alcance_atual = 100
+                    alcance_atual = 140
                     foto_atual = arqueiro_img
-                    alcancemax_atual = 120
+                    alcancemax_atual = 140
                     disparo_atual = arqueiro_tiros_img
                 
                 if event.key == pygame.K_2:
                     dano_atual = 2
                     custo_atual = 200
-                    alcance_atual = 90
+                    alcance_atual = 100
                     foto_atual = mago_img
-                    alcancemax_atual = 110
+                    alcancemax_atual = 120
                     disparo_atual = mago_tiros_img
 
                 if event.key == pygame.K_3:
-                    dano_atual = 3
+                    dano_atual = 4
                     custo_atual = 400
                     alcance_atual = 70
                     foto_atual = golem_img
-                    alcancemax_atual = 100
+                    alcancemax_atual = 140
                     disparo_atual = golem_tiros_img
 
             #Seleciona posição da Torre
