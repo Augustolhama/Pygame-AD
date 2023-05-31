@@ -42,7 +42,7 @@ teste = True
 caminho = [(0, 203), (80, 203), (80, 80), (200, 80), (200, 243), (360, 243), (360, 160), (600, 160)]
 fim_caminho = (600,160)
 fps = 45
-spawn_delay = 1000
+spawn_delay = 500
 last_spawn_time = 0
 dinheiro = 2000
 
@@ -63,25 +63,26 @@ vida_jogador = 100
 
 # Fonte para exibir a vida do jogador na tela
 fonte_vida = pygame.font.Font(None, 30)
-rounds={'round1':['rosa',10],
-        'round2':['rosa',20],
-        'round3':['rosa',15,'azul',5],
-        'round5':['rosa',20,'azul',8],
-        'round6':['rosa',30,'azul',15],
-        'round7':['rosa',10,'azul',25],
-        'round8':['rosa',20,'azul',20],
-        'round9':['rosa',10,'azul',10,'azulclaro',5],
-        'round10':['rosa',20,'azul',20,'azulclaro',8],
-        'round11':['rosa',0,'azul',10,'azulclaro',15],
-        'round12':['rosa',0,'azul',20,'azulclaro',20],
-        'round13':['rosa',0,'azul',20,'azulclaro',35],
-        'round14':['rosa',0,'azul',10,'azulclaro',45],
-        'round15':['rosa',0,'azul',10,'azulclaro',55],
-        'round16':['rosa',0,'azul',10,'azulclaro',20,'vermelho',10],
-        'round17':['rosa',0,'azul',10,'azulclaro',20,'vermelho',20],
-        'round18':['rosa',0,'azul',10,'azulclaro',20,'vermelho',30],
-        'round19':['rosa',20,'azul',20,'azulclaro',20,'vermelho',30],
-        'round20':['rosa',50,'azul',50,'azulclaro',50,'vermelho',50],
+rounds={'round1':['rosa',10,'azul',0,'azulclaro',0,'vermelho',0],
+        'round2':['rosa',20,'azul',0,'azulclaro',0,'vermelho',0],
+        'round3':['rosa',15,'azul',5,'azulclaro',0,'vermelho',0],
+        'round4':['rosa',20,'azul',8,'azulclaro',0,'vermelho',0],
+        'round5':['rosa',30,'azul',15,'azulclaro',0,'vermelho',0],
+        'round6':['rosa',10,'azul',25,'azulclaro',0,'vermelho',0],
+        'round7':['rosa',20,'azul',20,'azulclaro',0,'vermelho',0],
+        'round8':['rosa',10,'azul',10,'azulclaro',5,'vermelho',0],
+        'round9':['rosa',20,'azul',20,'azulclaro',8,'vermelho',0],
+        'round10':['rosa',0,'azul',10,'azulclaro',15,'vermelho',0],
+        'round11':['rosa',0,'azul',20,'azulclaro',20,'vermelho',0],
+        'round12':['rosa',0,'azul',20,'azulclaro',35,'vermelho',0],
+        'round13':['rosa',0,'azul',10,'azulclaro',45,'vermelho',0],
+        'round14':['rosa',0,'azul',10,'azulclaro',55,'vermelho',0],
+        'round15':['rosa',0,'azul',10,'azulclaro',20,'vermelho',10],
+        'round16':['rosa',0,'azul',10,'azulclaro',20,'vermelho',20],
+        'round17':['rosa',0,'azul',10,'azulclaro',20,'vermelho',30],
+        'round18':['rosa',20,'azul',20,'azulclaro',20,'vermelho',30],
+        'round19':['rosa',10,'azul',10,'azulclaro',50,'vermelho',50],
+        'round20':['rosa',0,'azul',0,'azulclaro',70,'vermelho',70],
         }
 
 # Classe para os inimigos
@@ -197,20 +198,63 @@ torres = pygame.sprite.Group()
 # Grupo para armazenar os projéteis
 projeteis = pygame.sprite.Group()
 
-# Função para criar um novo fantasma
-def criar_fantasma():
-    tipo_fantasma = random.choice(["rosa", "azul", "azulclaro", "vermelho"])
+def cria_lista_fantasmas(fantasmasl):
+    lista_de_fantasmas = []
 
-    if tipo_fantasma == "rosa":
+    rosas = fantasmasl[0][1]
+    for i in range(0, rosas):
+        lista_de_fantasmas.append('rosa')
+
+    azuis = fantasmasl[1][1]
+    for i in range(0, azuis):
+        lista_de_fantasmas.append('azul')
+
+    azuisclaro = fantasmasl[2][1]
+    for i in range(0, azuisclaro):
+        lista_de_fantasmas.append('azulclaro')
+
+    vermelhos = fantasmasl[3][1]
+    for i in range(0, vermelhos):
+        lista_de_fantasmas.append('vermelho')
+
+    return lista_de_fantasmas
+
+    
+
+def extrai_round(current_time):
+    if current_time == 5000:
+  
+        fantasmasr = rounds['round1']
+        return cria_lista_fantasmas(fantasmasr)
+    elif current_time == 17000:
+
+        fantasmasr = rounds['round2']
+        return cria_lista_fantasmas(fantasmasr)
+    elif current_time == 39000:
+
+        fantasmasr = rounds['round3']
+        return cria_lista_fantasmas(fantasmasr)
+
+
+    
+
+
+
+'''# Função para criar um novo fantasma
+def criar_fantasma():
+
+    lista_com_cores = extrai_round()
+
+    if indice == "rosa":
         enemy = Fantasma(1, fantasmarosa_img, 1)
-    elif tipo_fantasma == "azul":
+    elif indice == "azul":
         enemy = Fantasma(2, fantasmaazul_img, 2)
-    elif tipo_fantasma == "azulclaro":
+    elif indice == "azulclaro":
         enemy = Fantasma(3, fantasmaazulclaro_img, 3)
-    elif tipo_fantasma == "vermelho":
+    elif indice == "vermelho":
         enemy = Fantasma(4, fantasmavermelho_img, 4)
 
-    fantasmas.add(enemy)
+    fantasmas.add(enemy)'''
 
 # Função para desenhar os fantasmas na tela
 def desenhar_fantasmas(screen):
@@ -335,6 +379,8 @@ def main():
     mensagem_temporaria = ''
     mensagem = fonte2.render(mensagem_temporaria, True, (255, 255, 255))
 
+    espera = 0
+    k = 0
     vida_jogador=100
     dano_atual = 1
     custo_atual = 100
@@ -350,6 +396,7 @@ def main():
                 teste = False
                 pygame.quit()
                 return
+            
             #Seleciona tipo de Torre
             if event.type == pygame.KEYDOWN:             
                 if event.key == pygame.K_1:
@@ -389,7 +436,7 @@ def main():
                         else:
                             mensagem_temporaria = 'Posição inválida'
                             tempo_mensagem = 135 
-
+        #mensagem voadora
         if tempo_mensagem > 0:
             mensagem = fonte2.render(mensagem_temporaria, True, (255, 255, 255))
             tempo_mensagem -=1
@@ -455,10 +502,27 @@ def main():
         desenhar_vida(tela)
 
         # Verificação do tempo para criar novos fantasmas
-        current_time = pygame.time.get_ticks()
-        if current_time - last_spawn_time > spawn_delay:
-            criar_fantasma()
-            last_spawn_time = current_time
+        contador = pygame.time.get_ticks()
+        contador2 = pygame.time.get_ticks()
+
+        if contador - last_spawn_time > spawn_delay:
+            
+            if contador2>5000:
+                indice = extrai_round(contador)
+
+                if indice[k] == "rosa":
+                    enemy = Fantasma(1, fantasmarosa_img, 1)
+                elif indice[k] == "azul":
+                    enemy = Fantasma(2, fantasmaazul_img, 2)
+                elif indice[k] == "azulclaro":
+                    enemy = Fantasma(3, fantasmaazulclaro_img, 3)
+                elif indice[k] == "vermelho":
+                    enemy = Fantasma(4, fantasmavermelho_img, 4)
+
+                    k += 1
+
+                    fantasmas.add(enemy)
+                    last_spawn_time = contador
 
         # Atualização da tela
         pygame.display.flip()
