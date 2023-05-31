@@ -364,6 +364,51 @@ def espaco_torre(t):
         for j in range(y - 30, y + 30):
             locais_ocupados.append((i, j))
 
+# Criar tela inicial
+def tela_inicial():
+    tela = pygame.display.set_mode((600, 400))
+    pygame.display.set_caption('Tower Defense')
+    relogio = pygame.time.Clock()
+    fps = 45
+
+    background = pygame.image.load('imgs/Mapa possivel.png').convert()
+    # Configurações do botão "Start game"
+    largura_botao = 200
+    altura_botao = 50
+    cor_botao = (231, 135, 0)  
+    cor_do_texto = (255, 255, 255)  
+    
+    inicio = True
+    while inicio:
+        # Ajusta a velocidade do jogo.
+        relogio.tick(fps)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                mouse_pos = pygame.mouse.get_pos()
+                button_rect = pygame.Rect((tela.get_width() - largura_botao) // 2,(tela.get_height() - altura_botao) // 2,largura_botao,altura_botao)
+                if button_rect.collidepoint(mouse_pos):
+                    return True
+
+        # Desenha o fundo
+        tela.blit(background, (0, 0))
+        
+        # Desenha o botão "Start game"
+        button_rect = pygame.Rect((tela.get_width() - largura_botao) // 2,(tela.get_height() - altura_botao) // 2,largura_botao,altura_botao)
+        pygame.draw.rect(tela, cor_botao, button_rect)
+        
+        # Desenha o texto do botão
+        font = pygame.font.Font(None, 30)
+        text = font.render("Start game", True, cor_do_texto)
+        text_rect = text.get_rect(center=button_rect.center)
+        tela.blit(text, text_rect)
+
+        # Atualiza a tela
+        pygame.display.flip()
+    pygame.quit()
+    
 
 
 # Função principal do jogo
@@ -530,4 +575,6 @@ def main():
 
 # Execução do jogo
 if __name__ == "__main__":
-    main()
+    iniciar_jogo = tela_inicial()
+    if iniciar_jogo:
+        main()
