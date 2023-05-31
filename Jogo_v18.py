@@ -37,6 +37,10 @@ mago_tiros_img = pygame.transform.scale(mago_tiros_img, (20, 20))
 arqueiro_tiros_img = pygame.image.load('imgs/flecha.png').convert_alpha()
 arqueiro_tiros_img = pygame.transform.scale(arqueiro_tiros_img, (20, 30))
 
+
+pygame.mixer.music.load('musica/musica.mp3')
+pygame.mixer.music.set_volume(0.4)
+
 # Variáveis de controle do jogo
 teste = True
 caminho = [(0, 203), (80, 203), (80, 80), (200, 80), (200, 243), (360, 243), (360, 160), (600, 160)]
@@ -506,6 +510,8 @@ def main():
     foto_atual = arqueiro_img
     alcancemax_atual = 120
     disparo_atual = arqueiro_tiros_img
+
+    pygame.mixer.music.play(loops=-1)
 
     # Loop principal do jogo
     while teste:
