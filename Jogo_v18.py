@@ -12,7 +12,7 @@ branco = (255,255,255)
 
 # Geração da janela
 tela = pygame.display.set_mode((600, 400))
-pygame.display.set_caption('Tower Defense')
+pygame.display.set_caption('Magic Tower Defense')
 
 # Carregamento das imagens
 background = pygame.image.load('imgs/Mapa possivel.png').convert()
